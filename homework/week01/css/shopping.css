@@ -2,8 +2,24 @@
     font-family: 'Nanum Pen Script', cursive;
 }
 
+html, body { 
+    width: 100%;
+}
+
+.container {
+    width: 500px;
+    margin: auto;
+}
 
 .park_img {
     width: 500px;
     height: 300px;
+}
+
+.form .order_btn {
+    text-align: center;
+}
+
+.footer {
+    margin-top: 100px;
 }
