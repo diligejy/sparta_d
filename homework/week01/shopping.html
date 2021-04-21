@@ -21,13 +21,13 @@
     <div class="container">
         <img src="https://pds.joins.com/news/component/htmlphoto_mmdata/201704/26/eaa21b08-f8e1-4fe9-8a79-c6752c1605fb.jpg"
             class="park_img" alt="박보영">
-        <div>
+        <div class="info">
             <h1>양초를 팝니다</h1>
             <h5>가격: 3,000원/개</h5>
+            <p>
+                이 양초는 사실 특별한 힘을 가지고 있어요. 양초를 켜고 소원을 빌면 짜자잔 뭐든지 이뤄지게 된답니다. 하나 사가세요! 대나무 향이 아주 좋아요
+            </p>    
         </div>
-        <p>
-            이 양초는 사실 특별한 힘을 가지고 있어요. 양초를 켜고 소원을 빌면 짜자잔 뭐든지 이뤄지게 된답니다. 하나 사가세요! 대나무 향이 아주 좋아요
-        </p>
         <div class="form my-4">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -68,18 +68,22 @@
 
         <div class="footer">
             <table>
-                <tr>
-                    <th>이름</th>
-                    <th>수량</th>
-                    <th>주소</th>
-                    <th>전화번호</th>
-                </tr>
-                <tr>
-                    <td>송진영</td>
-                    <td>10000</td>
-                    <td>서울시 어딘가 원룸</td>
-                    <td>010-1111-1234</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th scope="col">이름</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">주소</th>
+                        <th scope="col">전화번호</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>송진영</td>
+                        <td>10000</td>
+                        <td>서울시 어딘가 원룸</td>
+                        <td>010-1111-1234</td>
+                    </tr>
+                </tbody>
             </table>
 
             <!-- JS -->

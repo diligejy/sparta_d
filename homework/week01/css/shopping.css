@@ -16,10 +16,38 @@ html, body {
     height: 300px;
 }
 
+.info {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.info h1, h5 {
+    display: inline;
+}
+
 .form .order_btn {
     text-align: center;
 }
 
 .footer {
     margin-top: 100px;
+}
+
+.footer table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.footer table thead {
+    border-collapse: collapse;
+    border-top : 1px solid #dee2e6;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.footer table thead tr th{
+    padding: 12px;
+
+}
+.footer table tbody tr td{
+    padding: 12px;
 }
