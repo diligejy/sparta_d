@@ -1,17 +1,17 @@
-#git flow
+# git flow
 
-##설치
+## 설치
 
-- npm i -g git-flow
+    - npm i -g git-flow
 
-##init
+## init
 
-- git branch
+    - git branch
 
-##규칙
+## 규칙
 
-- develop, master에 직접 push하지 않는다.
+    - develop, master에 직접 push하지 않는다.
 
-##feature 생성
+## feature 생성
 
-- git flow feature start ajax
+    - git flow feature start ajax
