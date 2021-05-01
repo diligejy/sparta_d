@@ -11,8 +11,8 @@
   - jQuery
 
 ## 참조사이트
-1. [Awesome Readme](https://github.com/matiassingers/awesome-readme)
-
+1. README - [Awesome Readme](https://github.com/matiassingers/awesome-readme)
+2. gitignore - [Toptal gitignore](https://www.toptal.com/developers/gitignore?)
 ---
 
 [수업자료](https://www.notion.so/x-D-29832358c72642a9a8d3aa2ecab1388d)
