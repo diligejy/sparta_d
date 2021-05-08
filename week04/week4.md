@@ -2,6 +2,23 @@
 
 ## PyMongo CRUD
 
+    - 추후 추가
+
+## 환경설정 방법
+
+    1. python 가상환경(venv) 만들기
+    2. .gitignore 추가
+    3. LICENSE 추가(플러그인 설치해서)
+    4. README.md 추가
+    5. git init(파이참 메뉴)
+    6. git flow init
+    7. 프로젝트 github 공유
+    8. master, develop 브랜치 깃허브에 푸시되었는지 확인
+    9. poetry init
+    10. poetry add flask
+    11. poetry add pymongo
+    12. 커밋
+
 ## poetry python [설치페이지](https://python-poetry.org/docs/#installation)
 
     - 의존성 관리를 위해 사용
