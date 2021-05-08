@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#cards-box").html("");
-    showArticles();
+    // showArticles();
 });
 
 function openClose() {
@@ -19,29 +19,61 @@ function openClose() {
 }
 
 function postArticle() {
+    let input_url = document.querySelector('#post-url').value;
+    let input_comment = document.querySelector('#post-comment').value;
     $.ajax({
         type: "POST",
-        url: "/memo",
-        data: {},
+        url: "/create_url_comment",
+        data: {
+            'url_give': input_url,
+            'comment_give': input_comment
+        },
         success: function (response) { // 성공하면
             if (response["result"] == "success") {
-                alert(response["msg"]);
+                console.log(response["msg"]);
             }
+            window.location.reload();
         }
     })
 }
 
 function showArticles() {
+    let input_url = document.querySelector('#post-url').value;
+    let input_comment = document.querySelector('#post-comment').value;
+
     $.ajax({
         type: "GET",
-        url: "/memo",
-        data: {},
-        success: function (response) {
-            if (response["result"] == "success") {
-                alert(response["msg"]);
+        url: "/show_url_comment",
+        data: {
+            'url_give': input_url,
+            'comment_give': input_comment
+        },
+        success: function (response) { // 성공하면
+            if (response['result'] == "success") {
+                let articles = response['articles']
+                for (let i = 0; i < articles.length; i++) {
+                    let title = articles[i]['title']
+                    let url = articles[i]['url']
+                    let image = articles[i]['image']
+                    let description = articles[i]['description']
+                    let comment = articles[i]['comment']
+                    makeCard(url, title, description, comment, image)
+                }
             }
         }
     })
 }
 
-function makeCard(url, title, desc, comment, image) { }
+function makeCard(url, title, desc, comment, image) {
+    let tempHtml = `<div class="card">
+                    <img class="card-img-top"
+                         src= "${image}""
+                         alt="Card image cap">
+                    <div class="card-body">
+                        <a href="${url}" class="card-title">${title}</a>
+                        <p class="card-text">${desc}</p>
+                        <p class="card-text comment">${comment}</p>
+                    </div>
+                </div>`;
+    $('#cards-box').append(tempHtml);
+}
