@@ -8,18 +8,11 @@ from bs4 import BeautifulSoup
 
 
 def inputNumber(message):
-    while True:
-        try:
-            userInput = int(input(message))
-        except ValueError:
-            print("Not an integer! Try again.")
-            continue
-        else:
-            if len(str(userInput)) != 8:
-                print('8자리 숫자로 다시 입력하세요')
-                continue
-            return userInput
-            break
+    userInput = input(message)
+    if (userInput.isdecimal()) & (len(str(userInput)) == 8):
+        return int(userInput)
+    else:
+        print('8자리 숫자로 다시 입력하세요')
 
 
 def genie_top_200(target_date):
