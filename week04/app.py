@@ -11,6 +11,7 @@ db = client.get_database('sparta')
 
 @app.route('/')
 def home():  # 함수명 수정 - 이름만 보고 접속되는 페이지를 확인할 수 있게!
+    
     return render_template('index.html')
 
 
@@ -54,9 +55,12 @@ def memo_post():
 
 @ app.route('/memo', methods=['GET'])
 def memo_get():
-    url_receive = request.form['url_give']
-    comment_receive = request.form['comment_give']
-    return jsonify()
+    memos = list(db.articles.find({}, {'_id': False}))
+    result = {
+        'result': 'success',
+        'articles': memos
+    }
+    return jsonify(result)
 
 
 @ app.route('/review', methods=['POST'])
