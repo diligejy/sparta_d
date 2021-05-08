@@ -1,16 +1,11 @@
 week02/node_modules
-<<<<<<< HEAD
-<<<<<<< HEAD
 week03/papa_api
 week03/naver_book.api
 week03/sparta_week03
-=======
 week03/sparta_week03
 week03/naver_book_api.py
 week03/papa_api.py
->>>>>>> 6ed9895 (crawl_test)
-=======
 week03/sparta_week03
 week03/naver_book_api.py
 week03/papa_api.py
->>>>>>> feature/card
+homework/week03/kakao_api_key.py
