@@ -49,9 +49,14 @@ def create_url_comment():
     return jsonify({'result': 'success', 'msg': '이 요청은 POST!'})
 
 
-@app.route('/get_url_comment', methods=['GET'])
+@app.route('/show_url_comment', methods=['GET'])
 def get_url_comment():
-    pass
+    memos = list(db.week04.find({},  {'_id': False}))
+    result = {
+        'result': 'success',
+        'articles': memos
+    }
+    return jsonify(result)
 
 
 if __name__ == '__main__':
