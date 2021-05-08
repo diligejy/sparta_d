@@ -29,3 +29,7 @@
     1. POST SEND하고 싶으면
         - BODY에서 x-www-form-urlencoded에 KEY, VALUE 넣어서 SEND
 
+## 추후 해야 할 기능
+
+    1. 로그인, 인증
+    2. NoSQL말고 SQL연결
