@@ -1,4 +1,13 @@
 from flask import Flask, render_template, request, jsonify
+
+from pymongo import MongoClient  # pymongo를 임포트 하기(패키지 인스톨 먼저 해야겠죠?)
+
+app = Flask(__name__)
+
+client = MongoClient('localhost', 27017)  # mongoDB는 27017 포트로 돌아갑니다.
+db = client.week04  # 'dbsparta'라는 이름의 db를 만듭니다.
+
+
 app = Flask(__name__)
 
 
@@ -19,6 +28,11 @@ def post_url_comment():
     print('URL : ', url_receive)
     print('Comment : ', comment_receive)
     return jsonify({'result': 'success', 'msg': '이 요청은 POST!'})
+
+
+@app.route('/get_url_comment', methods=['GET'])
+def get_url_comment():
+    pass
 
 
 if __name__ == '__main__':
