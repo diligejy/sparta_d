@@ -1,6 +1,6 @@
 $(document).ready(function () {
     $("#cards-box").html("");
-    // showArticles();
+    showArticles();
 });
 
 function openClose() {
