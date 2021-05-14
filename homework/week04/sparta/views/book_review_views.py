@@ -26,3 +26,10 @@ def write_review():
     }
     db.reviews.insert_one(review)
     return jsonify({'result' : 'success', 'msg' : '리뷰가 성공적으로 작성되었습니다'})
+
+@bp.route('/show_book_review', methods=['GET'])
+def get_review():
+    # 1. DB에서 리뷰 정보 모두 가져오기
+    reviews = list(db.reviews.find({}, {'_id': 0}))
+    # 2. 성공 여부 & 리뷰 목록 반환하기
+    return jsonify({'result': 'success', 'reviews': reviews})

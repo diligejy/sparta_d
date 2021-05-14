@@ -5,6 +5,17 @@ $(document).ready(function () {
     showReview();
 });
 
+function makeCard(title, author, review) {
+    let tempHtml = `<tr> 
+                            <td>${title}</td>
+                            <td>${author}</td>
+                            <td>${review}</td>
+                    </tr>`;
+    $("#reviews-box").append(tempHtml);
+}
+
+
+
 function makeReview() {
     // 1. 제목, 저자, 리뷰 내용을 가져옵니다.
     // 2. 제목, 저자, 리뷰 중 하나라도 입력하지 않았을 경우 alert를 띄웁니다.
@@ -46,11 +57,14 @@ function showReview() {
 
     $.ajax({
         type: "GET",
-        url: "/book_review",
+        url: "/book_review/show_book_review",
         data: {},
         success: function (response) {
             if (response["result"] == "success") {
-                alert(response["msg"]);
+                let reviews = response['reviews'];
+                for (let i = 0; i < reviews.length; i++) {
+                    makeCard(reviews[i]['title'], reviews[i]['author'], reviews[i]['review']);
+                }
             } else {
                 alert("리뷰를 받아오지 못했습니다");
             }
