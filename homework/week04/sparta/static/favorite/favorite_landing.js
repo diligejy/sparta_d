@@ -80,12 +80,14 @@ function showStar() {
 function likeStar(name) {
     $.ajax({
         type: 'POST',
-        url: '/api/like',
-        data: {},
+        url: '/favorite/api/like',
+        data: { 'name_give': name },
         success: function (response) {
             if (response['result'] == 'success') {
-                let msg = response['msg'];
-                alert(msg);
+                // 2. '좋아요 완료!' 얼럿을 띄웁니다.
+                alert('좋아요 완료!')
+                // 3. 변경된 정보를 반영하기 위해 새로고침합니다.
+                window.location.reload()
             }
         }
     });
@@ -94,7 +96,7 @@ function likeStar(name) {
 function deleteStar(name) {
     $.ajax({
         type: 'POST',
-        url: '/api/delete',
+        url: 'favorite/api/delete',
         data: {},
         success: function (response) {
             if (response['result'] == 'success') {

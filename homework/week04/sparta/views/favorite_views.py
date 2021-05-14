@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, render_template, jsonify, request
 from pymongo import MongoClient
 
 bp = Blueprint('favorite', __name__, url_prefix='/favorite')
@@ -30,7 +30,11 @@ def like_star():
     # 4. mystar 목록에서 name이 name_receive인 문서의 like 를 new_like로 변경합니다.
     # 참고: '$set' 활용하기!
     # 5. 성공하면 success 메시지를 반환합니다.
-    return jsonify({'result': 'success', 'msg': 'like 연결되었습니다!'})
+    name_receive = request.form['name_give']
+    star = db.mystar.find_one({'name' : name_receive})
+    new_like = star['like'] + 1
+    db.mystar.update_one({'name' : name_receive}, {'$set' : {'like' : new_like}})
+    return jsonify({'result': 'success'})
 
 
 @bp.route('/api/delete', methods=['POST'])
