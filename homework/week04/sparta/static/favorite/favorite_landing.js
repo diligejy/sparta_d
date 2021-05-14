@@ -94,14 +94,20 @@ function likeStar(name) {
 }
 
 function deleteStar(name) {
+    // 1. 서버에 1) POST 방식으로, 2) /api/delete 라는 url에, 3) name_give라는 이름으로 name을 전달합니다.
+    // 참고) POST 방식이므로 data: {'name_give': name} 과 같은 양식이 되어야합니다!
+    // 2. '삭제 완료! 안녕!' 얼럿을 띄웁니다.
+    // 3. 변경된 정보를 반영하기 위해 새로고침합니다.
     $.ajax({
         type: 'POST',
-        url: 'favorite/api/delete',
-        data: {},
+        url: '/favorite/api/delete',
+        data: { 'name_give': name },
         success: function (response) {
             if (response['result'] == 'success') {
-                let msg = response['msg'];
-                alert(msg);
+                // 2. '삭제 완료! 안녕!' 얼럿을 띄웁니다.
+                alert('삭제 완료! 안녕!')
+                // 3. 변경된 정보를 반영하기 위해 새로고침합니다.
+                window.location.reload()
             }
         }
     });
