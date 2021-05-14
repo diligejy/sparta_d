@@ -8,3 +8,5 @@ class Document(db.Model):
     image = db.Column(db.Text(), nullable=False)
     description = db.Column(db.Text(), nullable=False)
     comment = db.Column(db.String(200), nullable=False)
+
+    
