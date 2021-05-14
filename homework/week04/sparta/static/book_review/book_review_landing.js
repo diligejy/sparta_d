@@ -11,7 +11,7 @@ function makeReview() {
     // 3. POST /review 에 저장을 요청합니다.
     $.ajax({
         type: "POST",
-        url: "/review",
+        url: "/book_review/create_book_review",
         data: {},
         success: function (response) {
             if (response["result"] == "success") {
@@ -28,7 +28,7 @@ function showReview() {
     // 3. 요청 성공했을 때 리뷰를 올바르게 화면에 나타내기
     $.ajax({
         type: "GET",
-        url: "/review",
+        url: "/book_review",
         data: {},
         success: function (response) {
             if (response["result"] == "success") {
