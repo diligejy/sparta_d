@@ -19,4 +19,10 @@ def write_review():
     title_receive = request.form['title_give']
     author_receive = request.form['author_give']
     review_receive = request.form['review_give']
+    review = {
+        'title' : title_receive,
+        'author' : author_receive,
+        'review' : review_receive,
+    }
+    db.reviews.insert_one(review)
     return jsonify({'result' : 'success', 'msg' : '리뷰가 성공적으로 작성되었습니다'})
