@@ -11,6 +11,7 @@ function setUserInfo() {
     if (token === undefined) {
         window.location.href = '/memo/login'
     } else {
+        // JWT에 해당하는 사용자 정보 받아오기
         $.ajax({
             type: 'POST',
             url: '/memo/user',
@@ -23,6 +24,9 @@ function setUserInfo() {
                         <div class="btn btn-primary">${id}</div>
                         <button onClick="logOut()" class="btn btn-primary">LOGOUT</button>
                     `)
+                } else {
+                    alert('다시 로그인해주세요.')
+                    window.location.href = '/memo/login'
                 }
             }
         })

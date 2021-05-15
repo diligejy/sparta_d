@@ -69,3 +69,17 @@ def api_signup():
     # 회원가입
     db.users.insert_one({'id': id, 'pw': pw_hash})
     return jsonify({'result': 'success'})
+
+
+@bp.route('/user', methods=['POST'])
+def user_info():
+    token_receive = request.headers['authorization']
+    token = token_receive.split()[1]
+    print('token', token)
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
+        print(payload)
+        return jsonify({'result': 'success', 'id': payload['id']})
+    except jwt.exceptions.ExpiredSignatureError:
+        # 에러 대응
+        return jsonify({'result': 'fail', 'msg': 'ExpiredSignature'})
