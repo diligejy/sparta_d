@@ -1,10 +1,12 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, json, render_template, request, jsonify
 from pymongo import MongoClient
 import hashlib
 import datetime
 import jwt
 from flask.cli import load_dotenv
 import os
+from bs4 import BeautifulSoup
+import requests
 bp = Blueprint('memo', __name__, url_prefix='/memo')
 
 client = MongoClient('localhost', 27017)
@@ -16,9 +18,23 @@ load_dotenv()
 JWT_SECRET = os.environ['JWT_SECRET']
 
 
-@bp.route('/')
+@bp.route('/',  methods=['GET'])
 def memo_landing():
-    return render_template('memo/memo_landing.html')
+    # API 추가
+    # 그냥 ['key']면 에러날 수 있으니까 get으로 가져옴(없을 경우 None)
+    token = request.cookies.get('loginToken')
+
+    if token:
+        try:
+            payload = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
+            id = payload['id']
+            memos = list(db.articles.find({'id': id}, {'_id': False}))
+        except jwt.ExpiredSignatureError:
+            memos = []
+    else:
+        memos = []
+
+    return render_template('memo/memo_landing.html', test='테스트', memos=memos)
 
 
 @bp.route('/login')
@@ -83,3 +99,47 @@ def user_info():
     except jwt.exceptions.ExpiredSignatureError:
         # 에러 대응
         return jsonify({'result': 'fail', 'msg': 'ExpiredSignature'})
+
+
+@bp.route('/create/article', methods=['POST'])
+def save_memo():
+    url_receive = request.form['url_give']
+    comment_receive = request.form['comment_give']
+
+    token_receive = request.headers['authorization']
+    token = token_receive.split()[1]
+    try:
+        # JWT 페이로드에서 id 확인
+        payload = jwt.decode(token, JWT_SECRET, algorithms=['HS256'])
+        id = payload['id']
+
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+        response = requests.get(
+            url_receive,
+            headers=headers
+        )
+        soup = BeautifulSoup(response.text, 'html.parser')
+
+        title = soup.select_one('meta[property="og:title"]')
+        url = soup.select_one('meta[property="og:url"]')
+        image = soup.select_one('meta[property="og:image"]')
+        description = soup.select_one('meta[property="og:description"]')
+        print(title['content'])
+        print(url['content'])
+        print(image['content'])
+        print(description['content'])
+        document = {
+            'title': title['content'],
+            'image': image['content'],
+            'description': description['content'],
+            'url': url['content'],
+            'comment': comment_receive,
+            'id': id,
+        }
+        db.articles.insert_one(document)
+        return jsonify(
+            {'result': 'success', 'msg': '저장했습니다.'}
+        )
+    except jwt.ExpiredSignatureError:
+        return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})

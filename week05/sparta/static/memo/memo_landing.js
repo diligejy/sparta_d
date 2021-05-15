@@ -52,19 +52,19 @@ function openClose() {
 function postArticle() {
     let url_give = $('#post-url').val()
     let comment_give = $('#post-comment').val()
+    let token = $.cookie('loginToken')
 
     $.ajax({
         type: "POST",
-        url: "/memo",
-        data: {
-            'url_give': url_give,
-            'comment_give': comment_give
-        },
+        url: "/memo/create/article",
+        headers: { 'authorization': `Bearer ${token}` },
+        data: { 'url_give': url_give, 'comment_give': comment_give },
         success: function (response) { // 성공하면
             if (response["result"] == "success") {
                 alert(response["msg"]);
+                // 페이지를 처음부터 다시 로드
+                document.location.reload()
             }
-            window.location.reload();
         }
     })
 }
@@ -108,4 +108,10 @@ function makeCard(url, title, desc, comment, image) {
             </div>
         </div>`;
     $('#cards-box').append(tempHtml);
+}
+
+function logOut() {
+    $.removeCookie('loginToken', { path: '/memo' })
+    alert('로그아웃')
+    window.location.href = '/memo/login'
 }
