@@ -36,7 +36,7 @@
         function login() {
             $.ajax({
                 type: "POST",
-                url: "/api/login",
+                url: "/memo/api/login",
                 data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
                 success: function (response) {
                     if (response['result'] == 'success') {
@@ -45,7 +45,7 @@
                         $.cookie('loginToken', response['token']);
 
                         alert('로그인 완료!')
-                        window.location.href = '/'
+                        window.location.href = '/memo'
                     } else {
                         // 로그인이 안되면 에러메시지를 띄웁니다.
                         alert(response['msg'])
@@ -69,7 +69,7 @@
         <input type="password" class="form-control" id="userpw" placeholder="My Password">
     </div>
     <button class="btn btn-primary" onclick="login()">로그인</button>
-    <a href="/register">회원이 아니라면?</a>
+    <a href="/memo/signup">회원이 아니라면?</a>
 </div>
 </body>
 </html>
