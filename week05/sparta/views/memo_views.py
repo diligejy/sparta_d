@@ -16,6 +16,9 @@ db = client.week05
 load_dotenv()
 # 환경변수 읽어오기
 JWT_SECRET = os.environ['JWT_SECRET']
+CLIENT_ID = os.environ['CLIENT_ID']
+CALLBACK_URL = os.environ['CALLBACK_URL']
+SERVICE_URL = os.environ['SERVICE_URL']
 
 
 @bp.route('/',  methods=['GET'])
@@ -37,12 +40,14 @@ def memo_landing():
     return render_template('memo/memo_landing.html', test='테스트', memos=memos)
 
 
-@bp.route('/login')
+@bp.route('/login', methods=['GET'])
 def memo_login():
-    return render_template('memo/memo_login.html')
+    CLIENT_ID = os.environ['CLIENT_ID']
+    CALLBACK_URL = os.environ['CALLBACK_URL']
+    SERVICE_URL = os.environ['SERVICE_URL']
+    return render_template('memo/memo_login.html', CLIENT_ID=CLIENT_ID, CALLBACK_URL=CALLBACK_URL, SERVICE_URL=SERVICE_URL)
 
-
-@bp.route('/api/login', methods=['POST'])
+@ bp.route('/api/login', methods=['POST'])
 def api_login():
     id = request.form['id_give']
     pw = request.form['pw_give']
@@ -143,3 +148,31 @@ def save_memo():
         )
     except jwt.ExpiredSignatureError:
         return jsonify({'result': 'fail', 'msg': '로그인 시간이 만료되었습니다.'})
+
+
+@bp.route('/naver', methods=['GET'])
+def callback():
+    CLIENT_ID = os.environ['CLIENT_ID']
+    CALLBACK_URL = os.environ['CALLBACK_URL']
+    SERVICE_URL = os.environ['SERVICE_URL']
+    return render_template('memo/callback.html', CALLBACK_URL=CALLBACK_URL, CLIENT_ID=CLIENT_ID, SERVICE_URL=SERVICE_URL)
+
+# 네이버 가입 API
+@bp.route('/api/register/naver', methods=['POST'])
+def api_register_naver():
+    naver_id = request.form['naver_id_give']
+    print(naver_id)
+
+    # 아직 가입하지 않은 naver id 케이스에서는 가입까지 처리
+    if not db.user.find_one({'id': naver_id}, {'_id': False}):
+        db.user.insert_one({'id': naver_id, 'pw': ''})
+
+    expiration_time = datetime.timedelta(hours=1)
+    payload = {
+        'id': naver_id,
+        # JWT 유효 기간 - 이 시간 이후에는 JWT 인증이 불가능합니다.
+        'exp': datetime.datetime.utcnow() + expiration_time,
+    }
+    token = jwt.encode(payload, JWT_SECRET)
+
+    return jsonify({'result': 'success', 'token': token})
