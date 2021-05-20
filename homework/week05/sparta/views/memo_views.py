@@ -11,3 +11,7 @@ db = client.assign05
 @bp.route('/')
 def _land():
     return render_template('memo/memo_landing.html')
+
+@bp.route('/login', methods=['GET'])
+def login():
+    return render_template('memo/memo_login.html')
