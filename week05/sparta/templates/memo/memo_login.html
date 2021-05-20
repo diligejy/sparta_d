@@ -1,0 +1,70 @@
+<!-- templates/login.html -->
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <!-- Webpage Title -->
+    <title>Hello, world!</title>
+
+    <!-- Required meta tags -->
+    <link rel="shortcut icon" href="#">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8">
+    </script>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- 쿠키 사용을 위한 Jquery-cookie 임포트 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+
+</head>
+
+<body>
+    <h1>로그인 페이지</h1>
+    <div>
+        <div class="form-group">
+            <label for="userid">ID</label>
+            <input type="email" class="form-control" id="userid" aria-describedby="emailHelp" placeholder="My ID">
+        </div>
+        <div class="form-group">
+            <label for="userpw">PW</label>
+            <input type="password" class="form-control" id="userpw" placeholder="My Password">
+        </div>
+        <button class="btn btn-primary" onclick="login()">로그인</button>
+        <a href="{{ url_for('memo.memo_signup') }}">회원이 아니라면?</a>
+        <!-- 네아로 개발도구(head 태그 안) -->
+
+        <!-- 네아로 버튼(body 태그 안) -->
+        <!-- 네이버아이디로로그인 버튼 노출 영역 -->
+
+        <div id="naver_id_login"></div>
+        <!-- //네이버아이디로로그인 버튼 노출 영역 -->
+        <script>
+            var naver_id_login = new naver_id_login("{{ CLIENT_ID }}", "{{ CALLBACK_URL }}");
+            var state = naver_id_login.getUniqState();
+            naver_id_login.setButton("white", 2, 40);
+            naver_id_login.setDomain("{{ SERVICE_URL }}");
+            naver_id_login.setState(state);
+            naver_id_login.init_naver_id_login();
+        </script>
+
+    </div>
+</body>
+
+</html>
