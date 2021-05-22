@@ -3,8 +3,7 @@ import pytest
 from pymongo import MongoClient
 import os
 import sys
-from sparta import __init__ as flask_app
-
+import app as flask_app
 test_database_name = 'spartatest'
 client = MongoClient('localhost', 27017)
 db = client.get_database(test_database_name)
